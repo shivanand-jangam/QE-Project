@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.utils.PropertyFileReader;
 
 import io.restassured.RestAssured;
@@ -16,7 +17,7 @@ public class RestUtil {
 
 	private static final Logger log = LogManager.getLogger(RestUtil.class);
 
-	PropertyFileReader propertyFileReader;
+	public static PropertyFileReader propertyFileReader;
 
 	public static Map<String, String> headers = new HashMap<>();
 
@@ -46,12 +47,16 @@ public class RestUtil {
 		ENDPOINT = endpoint;
 	}
 
+	public void setToken() {
+		headers.put("Cookie", "token=" + getToken());
+	}
+
 	public Response hitAPIRequest(String request) {
 		if (request.equalsIgnoreCase("GET")) {
 			response = RestAssured.given().headers(headers).get(ENDPOINT);
 		} else if (request.equalsIgnoreCase("POST")) {
 			response = RestAssured.given().headers(headers).body(PAYLOAD)
-					.get(ENDPOINT);
+					.post(ENDPOINT);
 		} else if (request.equalsIgnoreCase("PUT")) {
 			response = RestAssured.given().headers(headers).body(PAYLOAD)
 					.put(ENDPOINT);
@@ -75,6 +80,8 @@ public class RestUtil {
 				+ " Is not macthing with the Actual value: " + actual);
 		log.info("Verified Expected: " + expected
 				+ " is matching with the Actual value: " + actual);
+		ExtentCucumberAdapter.addTestStepLog("Verified Expected: " + expected
+				+ " is matching with the Actual value: " + actual);
 	}
 
 	public void verifyExpectedMatchWithActual(int expected, int actual) {
@@ -82,6 +89,16 @@ public class RestUtil {
 				+ " Is not macthing with the Actual value: " + actual);
 		log.info("Verified Expected: " + expected
 				+ " is matching with the Actual value: " + actual);
+		ExtentCucumberAdapter.addTestStepLog("Verified Expected: " + expected
+				+ " is matching with the Actual value: " + actual);
+	}
+
+	public static String getToken() {
+		RestAssured.baseURI = propertyFileReader.getProperty("api.uri");
+		String payload = "{\"username\":\"admin\",\"password\":\"password123\"}";
+		return RestAssured.given().contentType("application/json").body(payload)
+				.when().post("/auth").then().log().body().extract().response()
+				.jsonPath().getString("token");
 	}
 
 }

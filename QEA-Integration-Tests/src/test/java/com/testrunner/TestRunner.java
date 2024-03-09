@@ -1,5 +1,4 @@
 package com.testrunner;
-
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -11,9 +10,10 @@ import io.cucumber.testng.TestNGCucumberRunner;
 
 @CucumberOptions(features = ".\\src\\test\\resources\\features", glue = {
 		"com.stepdefinations",}, plugin = {"pretty",
-				"html:target/cucumber-reports/cucumber-pretty",
+				// "html:target/cucumber-reports/cucumber-pretty",
+				"html:target/cucumber-reports/cucumber-pretty.html",
 				"json:target/cucumber-reports/CucumberTestReport.json",
-				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}, tags = "@APITest")
+				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}, tags = "@TestRunUpdate")
 
 public class TestRunner<CucumberFeatureWrapper> {
 
