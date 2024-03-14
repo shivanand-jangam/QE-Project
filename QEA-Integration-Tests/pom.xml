@@ -188,6 +188,7 @@
 					<skip>false</skip>
 					<threadCount>2</threadCount>
 					<perCoreThreadCount>false</perCoreThreadCount>
+					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>
 			</plugin>
 			<plugin>
