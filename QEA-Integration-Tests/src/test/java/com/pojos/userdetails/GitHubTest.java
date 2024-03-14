@@ -7,7 +7,7 @@ public class GitHubTest {
 	}
 
 	public void testGit2() {
-		System.out.println("Testing Github2");
+		System.out.println("Chnaaged as per review comment Github2");
 	}
 
 }
