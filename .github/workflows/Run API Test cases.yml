@@ -16,4 +16,4 @@ jobs:
           cache: maven
       - name: Build with Maven
         working-directory: ./QEA-Integration-Tests
-        run: mvn test -DsuiteXmlFile=Run_API_Tests.xml
+        run: mvn test -DsuiteXmlFile="Run_API_Tests.xml"
