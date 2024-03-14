@@ -1,11 +1,12 @@
 package com.pojos.userdetails;
 
-public class Booking {
+public class PartialBooking {
+
 	public String firstname;
 	public String lastname;
 	public int totalprice;
 	public boolean depositpaid;
-	public Bookingdates bookingdates;
+	public Bookingdates bookingdates2;
 	public String additionalneeds;
 
 	public String getFirstname() {
@@ -41,11 +42,11 @@ public class Booking {
 	}
 
 	public Bookingdates getBookingdates() {
-		return bookingdates;
+		return bookingdates2;
 	}
 
 	public void setBookingdates(Bookingdates bookingdates) {
-		this.bookingdates = bookingdates;
+		this.bookingdates2 = bookingdates;
 	}
 
 	public String getAdditionalneeds() {

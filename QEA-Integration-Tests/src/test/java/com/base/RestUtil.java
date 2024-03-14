@@ -37,6 +37,12 @@ public class RestUtil {
 
 	public void setContentType(String key, String value) {
 		headers.put(key, value);
+		// headers.put("Cookie", "token=" + getToken());
+	}
+
+	public void setContentType(String key) {
+
+		headers.put(key, "token=" + getToken());
 	}
 
 	public void setPayloadAs(String payload) {
@@ -48,6 +54,7 @@ public class RestUtil {
 	}
 
 	public void setToken() {
+		System.out.println("My Gen Token :" + getToken());
 		headers.put("Cookie", "token=" + getToken());
 	}
 
@@ -55,14 +62,12 @@ public class RestUtil {
 		if (request.equalsIgnoreCase("GET")) {
 			response = RestAssured.given().headers(headers).get(ENDPOINT);
 		} else if (request.equalsIgnoreCase("POST")) {
-			response = RestAssured.given().headers(headers).body(PAYLOAD)
-					.post(ENDPOINT);
+			response = RestAssured.given().headers(headers).body(PAYLOAD).post(ENDPOINT);
 		} else if (request.equalsIgnoreCase("PUT")) {
-			response = RestAssured.given().headers(headers).body(PAYLOAD)
-					.put(ENDPOINT);
+			response = RestAssured.given().headers(headers).body(PAYLOAD).put(ENDPOINT);
 		} else if (request.equalsIgnoreCase("PATCH")) {
-			response = RestAssured.given().headers(headers).body(PAYLOAD)
-					.patch(ENDPOINT);
+
+			response = RestAssured.given().headers(headers).body(PAYLOAD).patch(ENDPOINT);
 		} else if (request.equalsIgnoreCase("DELETE")) {
 			response = RestAssured.given().headers(headers).delete(ENDPOINT);
 		}
@@ -76,29 +81,27 @@ public class RestUtil {
 	}
 
 	public void verifyExpectedMatchWithActual(String expected, String actual) {
-		Assert.assertEquals(actual, expected, " Expected value: " + expected
-				+ " Is not macthing with the Actual value: " + actual);
-		log.info("Verified Expected: " + expected
-				+ " is matching with the Actual value: " + actual);
-		ExtentCucumberAdapter.addTestStepLog("Verified Expected: " + expected
-				+ " is matching with the Actual value: " + actual);
+		Assert.assertEquals(actual, expected,
+				" Expected value: " + expected + " Is not macthing with the Actual value: " + actual);
+		log.info("Verified Expected: " + expected + " is matching with the Actual value: " + actual);
+		ExtentCucumberAdapter
+				.addTestStepLog("Verified Expected: " + expected + " is matching with the Actual value: " + actual);
 	}
 
 	public void verifyExpectedMatchWithActual(int expected, int actual) {
-		Assert.assertEquals(actual, expected, " Expected value: " + expected
-				+ " Is not macthing with the Actual value: " + actual);
-		log.info("Verified Expected: " + expected
-				+ " is matching with the Actual value: " + actual);
-		ExtentCucumberAdapter.addTestStepLog("Verified Expected: " + expected
-				+ " is matching with the Actual value: " + actual);
+		Assert.assertEquals(actual, expected,
+				" Expected value: " + expected + " Is not macthing with the Actual value: " + actual);
+		log.info("Verified Expected: " + expected + " is matching with the Actual value: " + actual);
+		ExtentCucumberAdapter
+				.addTestStepLog("Verified Expected: " + expected + " is matching with the Actual value: " + actual);
 	}
 
 	public static String getToken() {
 		RestAssured.baseURI = propertyFileReader.getProperty("api.uri");
 		String payload = "{\"username\":\"admin\",\"password\":\"password123\"}";
-		return RestAssured.given().contentType("application/json").body(payload)
-				.when().post("/auth").then().log().body().extract().response()
-				.jsonPath().getString("token");
+		return RestAssured.given().contentType("application/json").body(payload).when().post("/auth").then().log()
+				.body().extract().response().jsonPath().getString("token");
+
 	}
 
 }

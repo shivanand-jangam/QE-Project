@@ -1,4 +1,5 @@
 package com.testrunner;
+
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -8,12 +9,10 @@ import io.cucumber.testng.CucumberOptions;
 import io.cucumber.testng.PickleWrapper;
 import io.cucumber.testng.TestNGCucumberRunner;
 
-@CucumberOptions(features = ".\\src\\test\\resources\\features", glue = {
-		"com.stepdefinations",}, plugin = {"pretty",
-				// "html:target/cucumber-reports/cucumber-pretty",
-				"html:target/cucumber-reports/cucumber-pretty.html",
-				"json:target/cucumber-reports/CucumberTestReport.json",
-				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}, tags = "@TestRunUpdate")
+@CucumberOptions(features = ".\\src\\test\\resources\\features", glue = { "com.stepdefinations", }, plugin = { "pretty",
+		// "html:target/cucumber-reports/cucumber-pretty",
+		"html:target/cucumber-reports/cucumber-pretty.html", "json:target/cucumber-reports/CucumberTestReport.json",
+		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:" }, tags = "@TestRun")
 
 public class TestRunner<CucumberFeatureWrapper> {
 
@@ -25,8 +24,7 @@ public class TestRunner<CucumberFeatureWrapper> {
 	}
 
 	@Test(dataProvider = "scenarios", description = "Scenario Name: ")
-	public void runScenario(PickleWrapper pickleEvent,
-			CucumberFeatureWrapper cucumberFeature) {
+	public void runScenario(PickleWrapper pickleEvent, CucumberFeatureWrapper cucumberFeature) {
 		testNGCucumberRunner.runScenario(pickleEvent.getPickle());
 	}
 

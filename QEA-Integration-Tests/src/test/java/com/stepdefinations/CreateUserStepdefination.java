@@ -8,6 +8,8 @@ public class CreateUserStepdefination extends BaseTest {
 
 	@Then("I should get fistname as {string}")
 	public void i_should_get_name_as(String expName) {
+		System.out.println("actual First name "+bookingDetails.booking.firstname);
+		System.out.println("exoected name "+ expName);
 		restUtil.verifyExpectedMatchWithActual(expName,
 				bookingDetails.booking.firstname);
 	}
