@@ -1,8 +1,16 @@
 name: Run Regression suite
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
+     inputs:  
+        Execution_Environment:
+          description: Select an Execution Environment
+          default: 'DEV'
+          required: true
+          type: choice
+          options:
+          - UAT
+          - DEV
+
 jobs:
   build:
     runs-on: windows-latest
