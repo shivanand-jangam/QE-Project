@@ -1,4 +1,4 @@
-name: Run Regression suite
+name: Run Sanity suite
 on:
   workflow_dispatch:
      inputs:  
