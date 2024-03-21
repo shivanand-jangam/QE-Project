@@ -1,27 +1,29 @@
-Feature: verify order one veg and one nonveg pizza with colddrink with login
+   Feature: verify order one veg and one nonveg pizza with colddrink with login
   I want to use this template for my feature file
 
   @tag1
-  Scenario: verify user is able to order one veg and one nonveg pizza with colddrink with login
+  Scenario: order one veg and one nonveg pizza with colddrink with login
     Given user am on dashboard page
-    When user click on the order online button
-    Then user should navigate to contact delivery page
-    When user click on locate me button
-    Then user should navigate to home page and bydefault on recommended option
-    When click on My account link and navigate to Login page
-    And user enters mobile number as "7757900210" and click on send otp button
-    When user enters valid otp
-    Then user successfully loggedin and navigate to homepage
-    When user click on veg Pizza option
-    And user choose a specific vegetarian pizza "Peppy Paneer" with large size
-    When user click on nonveg Pizza option
-    And user choose a specific nonvegetarian pizza "Chicken Dominator" with large size
-    And user should get chechout popup with selected pizza with amount
-    When user click on checkout button
-    Then user should navigate to cart page and it includes all buying product details
-    And user choose one coldrink in order along with pizza
-    Then verify sub amount and grand total amount which includes taxes
-    When user click on place order button
+    When Click on the order online button
+    Then Verify navigated to contact delivery page
+    When Click on locate me button
+    Then Verify navigated to home page
+    When Click on My account link
+    Then Verify navigated to Login page
+    And Enter mobile number as "7757900210" and click on send otp button
+    When Enter valid otp
+    Then Verify successfully loggedin and navigate to homepage
+    When Click on veg Pizza option
+    And Choose a specific vegetarian pizza
+    When Click on nonveg Pizza option
+    And Choose a specific nonvegetarian pizza
+    Then Verify chechout popup with selected pizza with amount
+    When Click on checkout button
+    Then Verify navigated to cart page
+    And Click on Add botton on one coldrink option
+    Then Verify product details on cart page
+    And verify price details in cart page
+    When Click on place order button
     Then user should navigate to payment page
     Then user should verify the order details and delivery address as per expected
     When payment mode as cash on delivery
