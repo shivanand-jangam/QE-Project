@@ -7,59 +7,58 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-
 import com.base.DriverManager;
 
 public class HomePage {
 
-	private static Logger log = LoggerFactory.getLogger(HomePage.class);
-	public HomePage() {
-		PageFactory.initElements(DriverManager.getDriver(), this);
-	}
+  private static Logger log = LoggerFactory.getLogger(HomePage.class);
 
-	private static String ADDRSS_PLACE_HOLDER = "//span[contains(text(),'%s')]";
-	@FindBy(xpath = "//button[text()='ORDER ONLINE NOW']")
-	private WebElement orderOnlineButton;
+  public HomePage() {
+    PageFactory.initElements(DriverManager.getDriver(), this);
+  }
 
-	@FindBy(xpath = "//input[@placeholder='Enter your delivery address']")
-	private WebElement locateMePlaceHolder;
+  private static String ADDRSS_PLACE_HOLDER = "//span[contains(text(),'%s')]";
 
-	@FindBy(xpath = "//input[@placeholder='Enter Area / Locality']")
-	private WebElement enterAreaLocalityInputField;
+  @FindBy(xpath = "//button[text()='ORDER ONLINE NOW']")
+  private WebElement orderOnlineButton;
 
-	@FindBy(xpath = "//div[@class='esc-btn crss-icn-rght']/span")
-	private WebElement escIconLocator;
+  @FindBy(xpath = "//input[@placeholder='Enter your delivery address']")
+  private WebElement locateMePlaceHolder;
 
-	public void verifyUserIsOnHomePage() {
-		DriverManager.getCommonActions().waitForTimeOutInSec(5);
-		Assert.assertTrue(
-				DriverManager.getCommonActions()
-						.isElementDisplayed(orderOnlineButton),
-				"User Is NOT Navigated to HomePage. Please check the URL ");
-		log.info("Verified that user is navigated to Home page");
-	}
+  @FindBy(xpath = "//input[@placeholder='Enter Area / Locality']")
+  private WebElement enterAreaLocalityInputField;
 
-	public void clickOnOrderOnlineButton() {
-		orderOnlineButton.click();
-		DriverManager.getCommonActions().waitForTimeOutInSec(2);
-	}
+  @FindBy(xpath = "//div[@class='esc-btn crss-icn-rght']/span")
+  private WebElement escIconLocator;
 
-	public void clickOnLocateMe() {
-		DriverManager.getCommonActions().waitForTimeOutInSec(2);
-		DriverManager.getCommonActions().click(locateMePlaceHolder);
-		DriverManager.getCommonActions().waitForTimeOutInSec(2);
-	}
+  public void verifyUserIsOnHomePage() {
+    DriverManager.getCommonActions().waitForTimeOutInSec(3);
+    Assert.assertTrue(DriverManager.getCommonActions().isElementDisplayed(orderOnlineButton),
+        "User Is NOT Navigated to HomePage. Please check the URL ");
+    log.info("Verified that user is navigated to Home page");
+  }
 
-	public void enterAreaText(String location) {
-		DriverManager.getCommonActions().click(locateMePlaceHolder);
-		DriverManager.getCommonActions().waitForTimeOutInSec(1);
-		enterAreaLocalityInputField.sendKeys(location);
-		DriverManager.getCommonActions().waitForTimeOutInSec(1);
-		DriverManager.getCommonActions().click(
-				By.xpath(String.format(ADDRSS_PLACE_HOLDER, location.trim())));
-		DriverManager.getCommonActions().waitForTimeOutInSec(1);
-//		if (DriverManager.getCommonActions().isPresent(escIconLocator)) {
-//			DriverManager.getCommonActions().click(escIconLocator);
-//		}
-	}
+  public void clickOnOrderOnlineButton() {
+    orderOnlineButton.click();
+    DriverManager.getCommonActions().waitForTimeOutInSec(2);
+  }
+
+  public void clickOnLocateMe() {
+    DriverManager.getCommonActions().waitForTimeOutInSec(2);
+    DriverManager.getCommonActions().click(locateMePlaceHolder);
+    DriverManager.getCommonActions().waitForTimeOutInSec(2);
+  }
+
+  public void enterAreaText(String location) {
+    DriverManager.getCommonActions().click(locateMePlaceHolder);
+    DriverManager.getCommonActions().waitForTimeOutInSec(1);
+    enterAreaLocalityInputField.sendKeys(location);
+    DriverManager.getCommonActions().waitForTimeOutInSec(1);
+    DriverManager.getCommonActions()
+        .click(By.xpath(String.format(ADDRSS_PLACE_HOLDER, location.trim())));
+    DriverManager.getCommonActions().waitForTimeOutInSec(1);
+    // if (DriverManager.getCommonActions().isPresent(escIconLocator)) {
+    // DriverManager.getCommonActions().click(escIconLocator);
+    // }
+  }
 }

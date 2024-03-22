@@ -325,6 +325,10 @@ public class CommonActions {
 		return locator.getAttribute("value");
 	}
 
+	public String getText(WebElement locator) {
+		return locator.getText();
+	}
+
 	public String getText(By locator) {
 		this.waitTillElementDisplyed(locator);
 		return DriverManager.getDriver().findElement(locator).getText();

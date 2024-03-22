@@ -6,7 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.base.DriverManager;
 
 public class MenuPage {
@@ -33,7 +33,7 @@ public class MenuPage {
 	private WebElement miniCartCheckoutButton;
 
 	public void verifyUserIsOnMenuPage() {
-		DriverManager.getCommonActions().waitForTimeOutInSec(5);
+		DriverManager.getCommonActions().waitForTimeOutInSec(3);
 		Assert.assertTrue(
 				DriverManager.getCommonActions()
 						.isElementDisplayed(menuPageAddressLink),
@@ -82,6 +82,8 @@ public class MenuPage {
 						+ " is not matching with the expected Value: " + price);
 		log.info("Verified that Product " + product + " Price is " + actualPrice
 				+ " is matching with the expected Value " + price);
+		ExtentCucumberAdapter.addTestStepLog("Verified that Product " + product + " Price is " + actualPrice
+                + " is matching with the expected Value " + price);
 	}
 
 	public void clickOnMiniCartCheckoutButon() {

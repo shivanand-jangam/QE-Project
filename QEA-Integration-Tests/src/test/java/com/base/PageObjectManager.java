@@ -3,22 +3,24 @@ package com.base;
 import com.pages.CartPage;
 import com.pages.HomePage;
 import com.pages.MenuPage;
+import com.pages.PaymentPage;
 
 public class PageObjectManager {
 
-	private HomePage homePage;
-	private MenuPage menuPage;
-	private CartPage cartPage;
+  public HomePage getHomePage() {
+    return new HomePage();
+  }
 
-	public HomePage getHomePage() {
-		return homePage = new HomePage();
-	}
+  public MenuPage getMenuPage() {
+    return new MenuPage();
+  }
 
-	public MenuPage getMenuPage() {
-		return menuPage = new MenuPage();
-	}
-	public CartPage geCartPage() {
-		return cartPage = new CartPage();
-	}
+  public CartPage getCartPage() {
+    return new CartPage();
+  }
+
+  public PaymentPage getPaymentPage() {
+    return new PaymentPage();
+  }
 
 }

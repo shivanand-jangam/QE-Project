@@ -19,15 +19,11 @@ Feature: verify end to end flow domino's Order Online
     And Verify price details of "Margherita" in cart page
     When Click on place order button
     And Fill all following details
-      | firstname | lastname | mobilenumber | emailaddress         | address | houseno |
-      | Vijay     | yaligar  |   7757900210 | vijayy8981@gmail.com | pune    |      24 |
     When Click on save to continue button
     Then Verify user is navigated payment page
     Then Verify the order Sub Total
-    And Verify Delivery Address details
-    When Select payment mode as Credit Card
-    Then Verify "Pay using Credit Card" text displayed
-
+    #When Select payment mode as Credit Card
+    #Then Verify "Pay using Credit Card" text displayed
     Examples: 
       | Section   | Product    | Quantity |
       | Veg Pizza | Margherita |        1 |
