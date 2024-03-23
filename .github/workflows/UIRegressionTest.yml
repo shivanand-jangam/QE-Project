@@ -44,7 +44,7 @@ jobs:
      
       - name: Started ${{github.event.inputs.Module}} Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: mvn clean -Dtest=UITestRunner-Dcucumber.filter.tags=@${{github.event.inputs.Module}} verify
+        run: mvn clean -Dtest=UITestRunner -Dcucumber.filter.tags=@${{github.event.inputs.Module}} verify
        
       - name: Upload Execution Report
         if : ${{always()}}
