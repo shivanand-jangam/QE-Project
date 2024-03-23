@@ -20,7 +20,7 @@ public class BrowserFactory {
 	public void openBrowser() {
 		String browser = propertyFileReader.getProperty("execution.browser");
 		if (browser.equalsIgnoreCase("Chrome")) {
-			WebDriverManager.chromedriver().setup();
+//			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("--enable-javascript");
 			options.addArguments("--incognito");
@@ -30,7 +30,7 @@ public class BrowserFactory {
 			options.addArguments("--start-maximized");
 			driver = new ChromeDriver(options);
 		} else if (browser.equalsIgnoreCase("edge")) {
-			WebDriverManager.edgedriver().setup();
+//			WebDriverManager.edgedriver().setup();
 			driver = new EdgeDriver();
 		}
 		driverManager.setDriver(driver);
