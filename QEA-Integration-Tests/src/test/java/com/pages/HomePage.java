@@ -7,6 +7,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 import com.base.DriverManager;
 
 public class HomePage {
@@ -36,6 +38,7 @@ public class HomePage {
     Assert.assertTrue(DriverManager.getCommonActions().isElementDisplayed(orderOnlineButton),
         "User Is NOT Navigated to HomePage. Please check the URL ");
     log.info("Verified that user is navigated to Home page");
+    ExtentCucumberAdapter.addTestStepLog("Verified that user is navigated to Home page");
   }
 
   public void clickOnOrderOnlineButton() {

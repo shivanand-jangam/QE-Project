@@ -22,7 +22,9 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -35,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import freemarker.template.utility.NullArgumentException;
+import io.cucumber.messages.internal.com.google.common.net.MediaType;
 
 public class CommonActions {
 	DriverManager driverManager;
@@ -645,33 +648,34 @@ public class CommonActions {
 		DriverManager.getCommonActions().waitForTimeOutInSec(2);
 	}
 
-	// public static void topEmbedScreenshot() {
-	// explicitWaitTime(2000);
-	// DriverManager.getCommonActions().scrollToTop();
-	// byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver())
-	// .getScreenshotAs(OutputType.BYTES);
-	// DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(),
-	// DriverManager.getScenario().getName());
-	// }
+	public static void topEmbedScreenshot() {
+		explicitWaitTime(2000);
+		DriverManager.getCommonActions().scrollToTop();
+		byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver())
+				.getScreenshotAs(OutputType.BYTES);
+		DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(),
+				DriverManager.getScenario().getName());
+	}
 
-	//// public static void bottomEmbedScreenshot() {
-	//// explicitWaitTime(2000);
-	//// DriverManager.getCommonActions().scrollToBottom();
-	//// byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver())
-	//// .getScreenshotAs(OutputType.BYTES);
-	//// DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(),
-	//// DriverManager.getScenario().getName());
-	//// }
-	////
-	//// public static byte[] embedScreenshot() {
-	//// explicitWaitTime(2000);
-	//// byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver())
-	//// .getScreenshotAs(OutputType.BYTES);
-	//// DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(),
-	//// DriverManager.getScenario().getName());
-	//// return srcBytes;
-	//// }
-	////
+	public static void bottomEmbedScreenshot() {
+		explicitWaitTime(2000);
+		DriverManager.getCommonActions().scrollToBottom();
+		byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver())
+				.getScreenshotAs(OutputType.BYTES);
+
+		DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(),
+				DriverManager.getScenario().getName());
+	}
+
+	public static byte[] embedScreenshot() {
+		explicitWaitTime(2000);
+		byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver())
+				.getScreenshotAs(OutputType.BYTES);
+		DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(),
+				DriverManager.getScenario().getName());
+		return srcBytes;
+	}
+
 	//// public static void copyFirstRunReport() {
 	//// File source = new File(
 	//// USER_DIR + PropertyStorage.getGeneratedReportDir());
