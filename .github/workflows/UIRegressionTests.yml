@@ -24,7 +24,7 @@ on:
         - DominosOrderOnlineTest
 
       Test_Input:
-        default: "Input Field Defaualt value"
+        default: "Input Field Default value"
         description: "Added this for default input filed"
         
 jobs:
@@ -50,11 +50,11 @@ jobs:
 
       - name: Executing the selected Module
         working-directory: ./QEA-Integration-Tests
-        run: mvn clean test -Dtest=UITestRunner -Dcucumber.filter.tags=@${{github.event.inputs.Module}
+        run: mvn clean test -Dtest=UITestRunner -Dcucumber.filter.tags=@${{github.event.inputs.Module}}
       
       - name: Upload Execution Report
         if : ${{always()}}
         uses: actions/upload-artifact@v3
         with:
-          name: ${{github.event.inputs.Module}-Execution-Report
+          name: ${{github.event.inputs.Module}}-Execution-Report
           path: D:/a/QEA-Integration-Tests/ExtentReport
