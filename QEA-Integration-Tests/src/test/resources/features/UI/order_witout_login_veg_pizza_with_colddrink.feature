@@ -1,6 +1,6 @@
 Feature: Verify end to end flow dominos Order Online
 
-  @RegressionTest @SmokeTest
+  @RegressionTest @SmokeTest @DominosOrderOnlineTest
   Scenario Outline: Verify End To End flow to order one veg pizza without login
     Given Verify user is on Dominos Home page
     When Click on the order online button
@@ -27,7 +27,7 @@ Feature: Verify end to end flow dominos Order Online
       | Section   | Product    | Quantity |
       | Veg Pizza | Margherita |        1 |
 
-  @RegressionTest
+  @RegressionTest @DominosOrderOnlineTest
   Scenario Outline: Verify Order one veg pizza without login
     Given Verify user is on Dominos Home page
     When Click on the order online button
