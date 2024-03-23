@@ -1,5 +1,4 @@
 name: Run UI Regression Tests
-
 on:
    workflow_dispatch:
     inputs:
@@ -23,7 +22,7 @@ on:
         - RegressionTest
         - DominosOrderOnlineTest
 
-      Test_Input:
+      TestInput:
         default: "Input Field Default value"
         description: "Added this for default input filed"
         
