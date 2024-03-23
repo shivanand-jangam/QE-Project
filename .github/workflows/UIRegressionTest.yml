@@ -32,28 +32,27 @@ jobs:
 
     steps:
       - name: Set up Latest Chrome
-      - uses: browser-actions/setup-chrome@latest
-      - run: chrome --version
-      - uses: actions/checkout@v2
+      -  uses: browser-actions/setup-chrome@latest
+      -  run: chrome --version
       
       - name: Set up Java 11
-      - uses: actions/setup-java@v3
+        uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'adopt'
 
       - name: Set up Maven
-      - uses: stCarolas/setup-maven@v4.3
+        uses: stCarolas/setup-maven@v4.3
         with:
          maven-version: 3.8.2
 
       - name: Executing the selected Module
-      - working-directory: ./QEA-Integration-Tests
-      - run: mvn clean test -Dtest=UITestRunner -Dcucumber.filter.tags=@${{github.event.inputs.Module}}
+        working-directory: ./QEA-Integration-Tests
+        run: mvn clean test -Dtest=UITestRunner -Dcucumber.filter.tags=@${{github.event.inputs.Module}}
       
       - name: Upload Execution Report
         if : ${{always()}}
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: ${{github.event.inputs.Module}}-Execution-Report
           path: D:/a/QEA-Integration-Tests/ExtentReport
