@@ -1,0 +1,54 @@
+name: Run UI Testcases
+on:
+  workflow_dispatch:
+   inputs:
+      Module:
+        description: Select a module for execution
+        default: ''
+        required: true
+        type: choice
+        options:
+        - RegressionTest
+        - SmokeTest
+        - DominosOrderOnlineTest
+      
+      Environment:
+        description: Select a execution environemnt
+        default: ''
+        required: true
+        type: choice
+        options:
+        - Dev
+        - QA
+        - Pre-prod
+
+jobs:
+  RunTests:
+    runs-on: windows-latest
+   
+    steps:
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - uses: actions/checkout@v2
+     
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+         
+      - name: Set up Maven
+        uses: stCarolas/setup-maven@v4.3
+        with:
+         maven-version: 3.8.2
+     
+      - name: Started ${{github.event.inputs.Module}} Tests Execution
+        working-directory: ./QEA-Integration-Tests
+        run: mvn clean -Dtest=UITestRunner -Dcucumber.filter.tags=@${{github.event.inputs.Module}} verify
+       
+      - name: Upload Execution Report
+        if : ${{always()}}
+        uses: actions/upload-artifact@v3
+        with:
+          name: Execution-Report
+          path: D:/a/QEA-Integration-Tests/ExtentReport
