@@ -15,10 +15,10 @@ import io.cucumber.testng.TestNGCucumberRunner;
 
 @CucumberOptions(features = ".\\src\\test\\resources\\features", glue = {
 		"com.stepdefinations",}, plugin = {"pretty",
-				 "html:target/cucumber-reports/cucumber-pretty",
+				"html:target/cucumber-reports/cucumber-pretty",
 				// "html:target/cucumber-reports/cucumber-pretty.html",
 				"rerun:target/rerun.txt",
-				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}, tags = "@UITest2")
+				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}, tags = "")
 
 public class UITestRunner<CucumberFeatureWrapper> {
 

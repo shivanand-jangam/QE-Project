@@ -9,12 +9,14 @@ import io.cucumber.testng.CucumberOptions;
 import io.cucumber.testng.PickleWrapper;
 import io.cucumber.testng.TestNGCucumberRunner;
 
-@CucumberOptions(features = ".\\src\\test\\resources\\features", glue = { "com.stepdefinations", }, plugin = { "pretty",
-		// "html:target/cucumber-reports/cucumber-pretty",
-		"html:target/cucumber-reports/cucumber-pretty.html", "json:target/cucumber-reports/CucumberTestReport.json",
-		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:" }, tags = "@TestRun")
+@CucumberOptions(features = ".\\src\\test\\resources\\features", glue = {
+		"com.stepdefinations",}, plugin = {"pretty",
+				"html:target/cucumber-reports/cucumber-pretty",
+				// "html:target/cucumber-reports/cucumber-pretty.html",
+				"rerun:target/rerun.txt",
+				"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"}, tags = "")
 
-public class TestRunner<CucumberFeatureWrapper> {
+public class APITestRunner<CucumberFeatureWrapper> {
 
 	private TestNGCucumberRunner testNGCucumberRunner;
 
@@ -24,11 +26,12 @@ public class TestRunner<CucumberFeatureWrapper> {
 	}
 
 	@Test(dataProvider = "scenarios", description = "Scenario Name: ")
-	public void runScenario(PickleWrapper pickleEvent, CucumberFeatureWrapper cucumberFeature) {
+	public void runScenario(PickleWrapper pickleEvent,
+			CucumberFeatureWrapper cucumberFeature) {
 		testNGCucumberRunner.runScenario(pickleEvent.getPickle());
 	}
 
-	@DataProvider(parallel = false)
+	@DataProvider(parallel = true)
 	public Object[][] scenarios() {
 		return testNGCucumberRunner.provideScenarios();
 	}

@@ -20,7 +20,7 @@ public class MenuPage {
 	private static String MENU_PLACEHOLDER = "//div[@data-label='%s']/span";
 
 	private static String PRODUCT_ADDTOCART_BTN_PLACEHOLER = "//div[@class='ref']/following-sibling::div/div[@data-label='%s']/descendant::div[@data-label='%s']/descendant::button[@data-label='addTocart']";
-	private static String PRODUCT_PRICE_PLACEHOLDER = "###//div[@class='ref']/following-sibling::div/div[@data-label='%s']/descendant::div[@data-label='%s']/descendant::span[@class='rupee']";
+	private static String PRODUCT_PRICE_PLACEHOLDER = "//div[@class='ref']/following-sibling::div/div[@data-label='%s']/descendant::div[@data-label='%s']/descendant::span[@class='rupee']";
 	private static String MAKE_MY_PIZZA_MORE_YUMMY_POPUP = "//button[@data-label='Add button']/span";
 
 	private static String CART_PRODUCT_NAMETEXT_PLACEHOLDER = "//div[@class='crt-itms']/descendant::span[text()='%s']";

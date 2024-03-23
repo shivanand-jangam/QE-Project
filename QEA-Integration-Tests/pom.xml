@@ -200,11 +200,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M7</version>
 				<configuration>
-					<suiteXmlFiles>
-						<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
-					</suiteXmlFiles>
 					<skip>false</skip>
-					<threadCount>3</threadCount>
+					<threadCount>2</threadCount>
 					<perCoreThreadCount>false</perCoreThreadCount>
 					<testFailureIgnore>true</testFailureIgnore>
 				</configuration>

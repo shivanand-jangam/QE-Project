@@ -19,6 +19,7 @@ public class ServiceHooks {
 		// if (DriverManager.getScenario().isFailed()) {
 		CommonActions.topEmbedScreenshot();
 		CommonActions.bottomEmbedScreenshot();
+		// BrowserFactory.closeBrowser();
 		// }
 	}
 
