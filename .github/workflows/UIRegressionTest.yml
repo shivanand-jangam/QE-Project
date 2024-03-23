@@ -1,4 +1,4 @@
-name: Run SF Regression Tests
+name: Run Regression Tests
 on:
   workflow_dispatch:
    inputs:
@@ -11,6 +11,16 @@ on:
         - RegressionTest
         - SmokeTest
         - DominosOrderOnlineTest
+      
+      Environment:
+        description: Select a execution environemnt
+        default: ''
+        required: true
+        type: choice
+        options:
+        - Dev
+        - QA
+        - Pre-prod
 
 jobs:
   RunTests:
