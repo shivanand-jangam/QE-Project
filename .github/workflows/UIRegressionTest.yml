@@ -21,7 +21,8 @@ on:
         - Dev
         - QA
         - Pre-prod
-
+  schedule:
+    - cron: 06 09 * * *
 jobs:
   RunTests:
     runs-on: windows-latest
