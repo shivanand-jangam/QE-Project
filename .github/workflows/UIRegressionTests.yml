@@ -9,8 +9,6 @@ on:
         default: 'QA'
         required: true
         type: choice
-      choice:
-        type: choice
         options:
         - DEV
         - QA
