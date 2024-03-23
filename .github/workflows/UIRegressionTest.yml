@@ -1,58 +1,44 @@
-name: Run UI Regression Tests
+name: Run SF Regression Tests
 on:
-   workflow_dispatch:
-    inputs:
-    
-      Execution_Environment:
-        description: Select the Environment
-        default: 'QA'
-        required: true
-        type: choice
-        options:
-        - DEV
-        - QA
-        - Pre-prod
-
+  workflow_dispatch:
+   inputs:
       Module:
-        description: Select the TestSuite For execution
-        default: 'RegressionTest'
+        description: Select a module for execution
+        default: ''
         required: true
         type: choice
         options:
         - RegressionTest
+        - SmokeTest
         - DominosOrderOnlineTest
 
-      TestInput:
-        default: "Input Field Default value"
-        description: "Added this for default input filed"
-        
 jobs:
   RunTests:
     runs-on: windows-latest
-
+   
     steps:
-      - name: Set up Latest Chrome
-      -  uses: browser-actions/setup-chrome@latest
-      -  run: chrome --version
-      
-      - name: Set up Java 11
+      - uses: browser-actions/setup-chrome@latest
+      - run: chrome --version
+      - uses: actions/checkout@v2
+     
+      - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
           java-version: '11'
           distribution: 'adopt'
-
+         
       - name: Set up Maven
         uses: stCarolas/setup-maven@v4.3
         with:
          maven-version: 3.8.2
-
-      - name: Executing the selected Module
+     
+      - name: Started ${{github.event.inputs.Module}} Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: mvn clean test -Dtest=UITestRunner -Dcucumber.filter.tags=@${{github.event.inputs.Module}}
-      
+        run: mvn clean -Dtest=UITestRunner-Dcucumber.filter.tags=@${{github.event.inputs.Module}} verify
+       
       - name: Upload Execution Report
         if : ${{always()}}
         uses: actions/upload-artifact@v3
         with:
-          name: ${{github.event.inputs.Module}}-Execution-Report
+          name: Execution-Report
           path: D:/a/QEA-Integration-Tests/ExtentReport
