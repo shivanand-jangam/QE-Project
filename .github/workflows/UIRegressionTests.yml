@@ -3,9 +3,12 @@ name: Run UI Regression Tests
 on:
    workflow_dispatch:
     inputs:
+    
       Execution_Environment:
-        type: Dropdown
-        description: Select the environment
+        description: Select the Environment
+        default: 'QA'
+        required: true
+        type: choice
       choice:
         type: choice
         options:
@@ -14,8 +17,10 @@ on:
         - Pre-prod
 
       Module:
-        type: Dropdown
         description: Select the TestSuite For execution
+        default: 'RegressionTest'
+        required: true
+        type: choice
         options:
         - RegressionTest
         - DominosOrderOnlineTest
