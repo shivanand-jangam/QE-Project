@@ -1,4 +1,4 @@
-name: Run Regression Tests
+name: Run UI Testcases
 on:
   workflow_dispatch:
    inputs:
