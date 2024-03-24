@@ -220,6 +220,11 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<systemPropertyVariables>
+						<cucumber.filter.tags>${tags}</cucumber.filter.tags>
+					</systemPropertyVariables>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
