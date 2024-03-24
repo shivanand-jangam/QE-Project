@@ -33,7 +33,7 @@ jobs:
      
       - name: Started Smoke Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: mvn clean -DSuiteName=@${{github.event.inputs.Module}} verify
+        run: mvn clean -Dtest=UITestRunner -Dcucumber.filter.tags=@SmokeTest verify
        
       - name: Upload Execution Report
         if : ${{always()}}
