@@ -33,7 +33,7 @@ jobs:
      
       - name: Started Smoke Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: mvn test -DsuiteXmlFile="Run_UI_Tests.xml" -Dcucumber.filter.tags="@SmokeTest"
+        run: mvn test -DsuiteXmlFile="Run_UI_Tests.xml"
        
       - name: Upload Execution Report
         if : ${{always()}}
