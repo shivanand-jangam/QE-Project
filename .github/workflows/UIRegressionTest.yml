@@ -1,4 +1,4 @@
-name: Run UI Testcases
+name: Run SF Regression Tests
 on:
   workflow_dispatch:
    inputs:
@@ -11,16 +11,6 @@ on:
         - RegressionTest
         - SmokeTest
         - DominosOrderOnlineTest
-      
-      Environment:
-        description: Select a execution environemnt
-        default: ''
-        required: true
-        type: choice
-        options:
-        - Dev
-        - QA
-        - Pre-prod
 jobs:
   RunTests:
     runs-on: windows-latest
@@ -41,13 +31,13 @@ jobs:
         with:
          maven-version: 3.8.2
      
-      - name: Started ${{github.event.inputs.Module}} Tests Execution
+      - name: Started Smoke Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: mvn clean -Dtest=UITestRunner -Dcucumber.filter.tags=@${{github.event.inputs.Module}} verify
+        run: mvn clean -DSuiteName=@${{github.event.inputs.Module}} verify
        
       - name: Upload Execution Report
         if : ${{always()}}
         uses: actions/upload-artifact@v3
         with:
           name: Execution-Report
-          path: D:/a/QEA-Integration-Tests/ExtentReport
+          path: D:/a/QE-Project/QE-Project/QEA-Integration-Tests/ExtentReport
