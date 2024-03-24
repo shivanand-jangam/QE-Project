@@ -1,4 +1,4 @@
-name: Run SF Regression Tests
+name: Run Regression Tests
 on:
   workflow_dispatch:
    inputs:
@@ -31,9 +31,9 @@ jobs:
         with:
          maven-version: 3.8.2
      
-      - name: Started Smoke Tests Execution
+      - name: Started ${{github.event.inputs.Module}} Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: mvn test -DsuiteXmlFile="Run_UI_Tests.xml" -Dtags="@SmokeTest"
+        run: mvn test -DsuiteXmlFile="Run_UI_Tests.xml" -Dtags=@${{github.event.inputs.Module}}
        
       - name: Upload Execution Report
         if : ${{always()}}
