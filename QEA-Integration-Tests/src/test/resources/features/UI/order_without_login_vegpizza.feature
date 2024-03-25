@@ -1,39 +1,29 @@
-Feature: validate user orders veg pizza
-  I want to use this template for my feature file
+Feature: Verify end to end flow dominos Order one veg pizza without login
 
-  @tag1
-  Scenario: order one veg pizza without login
-    Given user is on dashboard page
+  @RegressionTest @SmokeTest @DominosOrderOnlineTest6
+  Scenario Outline: Verify End To End flow to order one veg pizza without login
+    Given Verify user is on Dominos Home page
     When Click on the order online button
     Then Verify contact delivery page
     When Click on locate me button
-    Then Verify navigated to home page
-    When Click on veg Pizza option
-    And Choose a specific vegetarian pizza 
-    Then Verify chechout popup with selected pizza with amount  
-     When Click on checkout button
+    And Enter and Select Area as "Utsav Residency  "
+    Then Verify navigated to Menu page
+    When Click on '<Section>' Menu
+    And Click on '<Product>' Add to Cart button under '<Section>' section
+    And Make a note of one '<Product>' Price under '<Section>' section
+    Then Verify '<Product>' and total quantity of '<Quantity>' added in the checkout section
+    Then Verify total '<Quantity>' '<Product>' product price in the checkout section
+    When Click on checkout button
     Then Verify navigated to cart page
-    Then Verify product details on cart page
-    Then verify price details in cart page
-    When Click on place order button
-    And Fill all following details and Click on save to continue button
-      | firstname | lastname | mobilenumber | emailaddress         | address | houseno |
-      | Vijay     | yaligar  |   7757900210 | vijayy8981@gmail.com | pune    | 24      |
-    Then Verify navigated payment page
-    Then Verify the order details and delivery address
-    When Select payment mode as cash on delivery
-    Then Verify click_authonticate_button displayed
-    When Select payment mode as credit card
-    Then Verify "Pay using Credit Card" displayed
-    When Select payment mode selected as net banking
-    Then Verify "Pay using Net Banking" displayd
-   
-   #selfHealingMechaniusm
-   #POC-proof of concept
-   #alegza 
-   
-  
- 
-   
-   
+    Then Verify '<Product>' is showing in the cart page
+    And Verify price details of total '<Quantity>' '<Product>' product in cart page
+    #When Click on place order button
+    #And Fill all following details
+    #When Click on save to continue button
+    #Then Verify user is navigated payment page
+    #Then Verify the order Sub Total
     
+
+    Examples: 
+      | Section  | Product      | Quantity |
+      | Veg Pizza | Margherita  | 1        | 

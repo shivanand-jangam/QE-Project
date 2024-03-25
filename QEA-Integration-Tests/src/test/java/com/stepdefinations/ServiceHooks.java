@@ -17,8 +17,10 @@ public class ServiceHooks {
 	@After
 	public void afterSenario(Scenario scenario) {
 		// if (DriverManager.getScenario().isFailed()) {
-		CommonActions.topEmbedScreenshot();
-		CommonActions.bottomEmbedScreenshot();
+		DriverManager.getCommonActions().topEmbedScreenshot();
+		DriverManager.getCommonActions().bottomEmbedScreenshot();
+//		CommonActions.topEmbedScreenshot();
+//		CommonActions.bottomEmbedScreenshot();
 		// BrowserFactory.closeBrowser();
 		// }
 	}

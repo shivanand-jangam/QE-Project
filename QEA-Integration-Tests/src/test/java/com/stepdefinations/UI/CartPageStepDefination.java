@@ -10,15 +10,35 @@ public class CartPageStepDefination extends BaseTest {
   public void verify_navigated_to_cart_page() {
     pageObjectManager.getCartPage().verifyCartPage();
   }
-
   @Then("Verify {string} is showing in the cart page")
   public void verify_is_showing_in_the_cart_page(String product) {
     pageObjectManager.getCartPage().verifyProductOnCartPage(product);
   }
+  
+  @When("Add  {string} product of  {string}  from complete your meal section")
+  public void add_product_of_from_complete_your_meal_section(String quantity, String product) {
+     pageObjectManager.getCartPage().addFewProductsCompleteYourMeal(quantity, product);
+  }
+  
+  @Then("Verify {string} is showing into selected product and note its price")
+  public void verify_is_showing_into_selected_product(String completeCealProduct) {
+	   pageObjectManager.getCartPage().verifyCompleteMealProductAdded_Into_SelectedItems(completeCealProduct);
+  }
 
-  @Then("Verify price details of {string} in cart page")
-  public void verify_price_details_in_cart_page(String product) {
-    pageObjectManager.getCartPage().verifyPriceDetails(product, productDetails.getProductPrice());
+
+ 
+ 
+
+  @Then("Verify price details of total {string} {string} product in cart page")
+  public void verify_price_details_in_cart_page(String totalProduct,  String product) {
+	  String ProductPrice = productDetails.getProductPrice();
+      double oneProductPrice = Double.parseDouble(ProductPrice);
+      double totalProducts = Double.parseDouble(totalProduct);
+       Double totalProductsprice=oneProductPrice*totalProducts;
+       
+       String totalExpectedProductPrice =(String.valueOf(decimalFormat
+				.format(totalProductsprice)));
+    pageObjectManager.getCartPage().verifyPriceDetails(product, totalExpectedProductPrice);
   }
 
   @When("Click on place order button")
