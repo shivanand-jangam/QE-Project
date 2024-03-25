@@ -1,4 +1,4 @@
-name: Run UI Testcases
+name: Run Regression Tests
 on:
   workflow_dispatch:
    inputs:
@@ -11,16 +11,6 @@ on:
         - RegressionTest
         - SmokeTest
         - DominosOrderOnlineTest
-      
-      Environment:
-        description: Select a execution environemnt
-        default: ''
-        required: true
-        type: choice
-        options:
-        - Dev
-        - QA
-        - Pre-prod
 jobs:
   RunTests:
     runs-on: windows-latest
@@ -43,11 +33,11 @@ jobs:
      
       - name: Started ${{github.event.inputs.Module}} Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: mvn clean -Dtest=UITestRunner -Dcucumber.filter.tags=@${{github.event.inputs.Module}} verify
+        run: mvn test -DsuiteXmlFile="Run_UI_Tests.xml" -Dtags=@${{github.event.inputs.Module}}
        
       - name: Upload Execution Report
         if : ${{always()}}
         uses: actions/upload-artifact@v3
         with:
           name: Execution-Report
-          path: D:/a/QEA-Integration-Tests/ExtentReport
+          path: D:/a/QE-Project/QE-Project/QEA-Integration-Tests/ExtentReport
