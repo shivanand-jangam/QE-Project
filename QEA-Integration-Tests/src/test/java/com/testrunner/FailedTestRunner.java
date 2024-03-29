@@ -14,13 +14,13 @@ import io.cucumber.testng.CucumberOptions;
 import io.cucumber.testng.PickleWrapper;
 import io.cucumber.testng.TestNGCucumberRunner;
 
-@CucumberOptions(features = ".\\src\\test\\resources\\features", glue = { "com.stepdefinations", }, plugin = { "pretty",
+@CucumberOptions(features = "@ExtentReport/rerun.txt", glue = { "com.stepdefinations", }, plugin = { "pretty",
 		"html:target/cucumber-reports/cucumber-pretty",
 //				 "html:target/cucumber-reports/cucumber-pretty.html",
 		"rerun:ExtentReport/rerun.txt",
 		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:" })
 
-public class UITestRunner<CucumberFeatureWrapper> {
+public class FailedTestRunner<CucumberFeatureWrapper> {
 
 	private TestNGCucumberRunner testNGCucumberRunner;
 	private BrowserFactory browserFactory;
@@ -54,7 +54,7 @@ public class UITestRunner<CucumberFeatureWrapper> {
 	@AfterClass
 	public void afterClass() {
 		testNGCucumberRunner.finish();
-		CommonActions.copyFirstRunReport();
+		CommonActions.copyRerunReport();
 		CommonActions.renameTheExtentReportHtml();
 	}
 }

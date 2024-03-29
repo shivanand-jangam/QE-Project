@@ -9,7 +9,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +39,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
+import com.utils.PropertyFileReader;
+
 import freemarker.template.utility.NullArgumentException;
 import io.cucumber.messages.internal.com.google.common.net.MediaType;
 
@@ -49,6 +54,7 @@ public class CommonActions {
 	private static final String JS_SCROLL_TO_TOP = "window.scrollTo(0, 0);";
 	private static final String JS_SCROLL_TO_VIEW_ELEMENT = "arguments[0].scrollIntoView();";
 	private static final String USER_DIR = System.getProperty("user.dir");
+	private static PropertyFileReader fileReader = new PropertyFileReader();
 
 	public CommonActions(DriverManager driver) {
 		driverManager = driver;
@@ -99,31 +105,27 @@ public class CommonActions {
 	}
 
 	public void scrollIntoView(WebElement element) {
-		((JavascriptExecutor) DriverManager.getDriver())
-				.executeScript(JS_SCROLL_TO_ELEMENT, element);
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(JS_SCROLL_TO_ELEMENT, element);
 		log.info("----------Scrolled element into view-----------");
 	}
 
 	public void scrollIntoView(By element) {
-		((JavascriptExecutor) DriverManager.getDriver()).executeScript(
-				JS_SCROLL_TO_ELEMENT,
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(JS_SCROLL_TO_ELEMENT,
 				DriverManager.getDriver().findElement(element));
 		log.info("----------Scrolled element into view-----------");
 	}
 
 	public void scrollIntoCenterView(WebElement element) {
 		Point p = element.getLocation();
-		((JavascriptExecutor) DriverManager.getDriver()).executeScript(String
-				.format("window.scroll(%s,%s - (window.innerHeight / 2));",
-						p.getX(), p.getY()));
+		((JavascriptExecutor) DriverManager.getDriver())
+				.executeScript(String.format("window.scroll(%s,%s - (window.innerHeight / 2));", p.getX(), p.getY()));
 		log.info("----------Scrolled element into center view-----------");
 	}
 
 	public void scrollIntoCenterView(By element) {
 		Point p = DriverManager.getDriver().findElement(element).getLocation();
-		((JavascriptExecutor) DriverManager.getDriver()).executeScript(String
-				.format("window.scroll(%s,%s - (window.innerHeight / 2));",
-						p.getX(), p.getY()));
+		((JavascriptExecutor) DriverManager.getDriver())
+				.executeScript(String.format("window.scroll(%s,%s - (window.innerHeight / 2));", p.getX(), p.getY()));
 		log.info("----------Scrolled element into center view-----------");
 	}
 
@@ -156,29 +158,23 @@ public class CommonActions {
 	}
 
 	public void waitForPageLoaderToDisappear() {
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(),
-				explicitWaitTimeout);
-		wait.until(ExpectedConditions
-				.invisibilityOfElementLocated(By.id(LOADING_DETAILS)));
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), explicitWaitTimeout);
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id(LOADING_DETAILS)));
 		DriverManager.getCommonActions().waitForTimeOutInSec(5);
 	}
 
 	public WebElement waitForElementToBeRefreshedAndClickable(By by) {
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(),
-				explicitWaitTimeout);
-		return wait.until(ExpectedConditions
-				.refreshed(ExpectedConditions.elementToBeClickable(by)));
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), explicitWaitTimeout);
+		return wait.until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(by)));
 	}
 
 	public WebElement waitForElementToBeVisible(WebElement webElement) {
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(),
-				explicitWaitTimeout);
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), explicitWaitTimeout);
 		return wait.until(ExpectedConditions.visibilityOf(webElement));
 	}
 
 	public void scrollToTop() {
-		((JavascriptExecutor) DriverManager.getDriver())
-				.executeScript(JS_SCROLL_TO_TOP);
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript(JS_SCROLL_TO_TOP);
 		log.info("----------Scrolled page to top-----------");
 	}
 
@@ -186,20 +182,17 @@ public class CommonActions {
 		try {
 			((JavascriptExecutor) DriverManager.getDriver()).executeScript(
 					"$('html, body').animate({scrollTop: $(window).height(),scrollLeft:$(window).width()});;");
-			log.info(
-					"Scrolled to Bottom of the page in the current browser view ");
+			log.info("Scrolled to Bottom of the page in the current browser view ");
 		} catch (Exception exception) {
 			log.info(exception.getMessage());
 		}
 	}
 
-	private ExpectedCondition<String> newWindowHandleIsPresent(
-			final Set<String> currentWindowHandles) {
+	private ExpectedCondition<String> newWindowHandleIsPresent(final Set<String> currentWindowHandles) {
 		return new ExpectedCondition<String>() {
 			@Override
 			public String apply(WebDriver input) {
-				Iterator<String> iterator = DriverManager.getDriver()
-						.getWindowHandles().iterator();
+				Iterator<String> iterator = DriverManager.getDriver().getWindowHandles().iterator();
 				while (iterator.hasNext()) {
 					String next = iterator.next();
 					if (!currentWindowHandles.contains(next)) {
@@ -210,6 +203,7 @@ public class CommonActions {
 			}
 		};
 	}
+
 	public void moveToElement(WebElement element) {
 
 	}
@@ -246,15 +240,13 @@ public class CommonActions {
 	public CommonActions waitTillElementClickable(By locator) {
 		CommonActions wrapperClass = new CommonActions(driverManager);
 
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(),
-				explicitWaitTimeout);
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), explicitWaitTimeout);
 		wait.until(ExpectedConditions.elementToBeClickable(locator));
 		return this;
 	}
 
 	public void waitTillElementClickable(WebElement element) {
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(),
-				explicitWaitTimeout);
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), explicitWaitTimeout);
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 	}
 
@@ -273,8 +265,7 @@ public class CommonActions {
 			try {
 				clickWithJS(locator);
 			} catch (Exception e1) {
-				WebElement element = DriverManager.getDriver()
-						.findElement(locator);
+				WebElement element = DriverManager.getDriver().findElement(locator);
 				Actions actions = new Actions(DriverManager.getDriver());
 				actions.moveToElement(element).click().build().perform();
 			}
@@ -289,8 +280,7 @@ public class CommonActions {
 			try {
 				clickWithJS(locator);
 			} catch (Exception e1) {
-				WebElement element = DriverManager.getDriver()
-						.findElement(By.xpath(locator));
+				WebElement element = DriverManager.getDriver().findElement(By.xpath(locator));
 				Actions actions = new Actions(DriverManager.getDriver());
 				actions.moveToElement(element).click().build().perform();
 			}
@@ -311,8 +301,7 @@ public class CommonActions {
 	}
 
 	public String getAttribute(By locator, String attribute) {
-		return DriverManager.getDriver().findElement(locator)
-				.getAttribute(attribute);
+		return DriverManager.getDriver().findElement(locator).getAttribute(attribute);
 	}
 
 	public String getAttribute(WebElement locator, String attribute) {
@@ -320,8 +309,7 @@ public class CommonActions {
 	}
 
 	public String getValueAttribute(By locator) {
-		return DriverManager.getDriver().findElement(locator)
-				.getAttribute("value");
+		return DriverManager.getDriver().findElement(locator).getAttribute("value");
 	}
 
 	public String getValueAttribute(WebElement locator) {
@@ -339,13 +327,11 @@ public class CommonActions {
 
 	public String getText(String locator) {
 		this.waitTillElementDisplyed(By.xpath(locator));
-		return DriverManager.getDriver().findElement(By.xpath(locator))
-				.getText();
+		return DriverManager.getDriver().findElement(By.xpath(locator)).getText();
 	}
 
 	public void waitTillElementDisplyed(By locator) {
-		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(),
-				explicitWaitTimeout);
+		WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), explicitWaitTimeout);
 		wait.until(ExpectedConditions.presenceOfElementLocated(locator));
 	}
 
@@ -369,15 +355,12 @@ public class CommonActions {
 		for (WebElement element : elementList) {
 			try {
 				flag = element.isDisplayed();
-				Assert.assertTrue(element.isDisplayed(),
-						element + " : Element is not displayed in the list");
+				Assert.assertTrue(element.isDisplayed(), element + " : Element is not displayed in the list");
 			} catch (Exception e) {
-				JavascriptExecutor js = (JavascriptExecutor) DriverManager
-						.getDriver();
+				JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
 				js.executeScript(JS_SCROLL_TO_VIEW_ELEMENT, element);
 				flag = element.isDisplayed();
-				Assert.assertTrue(element.isDisplayed(),
-						element + " : Element is not  displayed in the list");
+				Assert.assertTrue(element.isDisplayed(), element + " : Element is not  displayed in the list");
 			}
 		}
 		return flag;
@@ -391,8 +374,7 @@ public class CommonActions {
 		} catch (NoSuchElementException e) {
 			return flag;
 		} catch (Exception e) {
-			JavascriptExecutor js = (JavascriptExecutor) DriverManager
-					.getDriver();
+			JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
 			js.executeScript(JS_SCROLL_TO_VIEW_ELEMENT, weblocator);
 			flag = weblocator.isDisplayed();
 		}
@@ -400,16 +382,14 @@ public class CommonActions {
 	}
 
 	public boolean isElementDisplayed(String locator) {
-		WebElement weblocator = DriverManager.getDriver()
-				.findElement(By.xpath(locator));
+		WebElement weblocator = DriverManager.getDriver().findElement(By.xpath(locator));
 		boolean flag = false;
 		try {
 			flag = weblocator.isDisplayed();
 		} catch (NoSuchElementException e) {
 			return flag;
 		} catch (Exception e) {
-			JavascriptExecutor js = (JavascriptExecutor) DriverManager
-					.getDriver();
+			JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
 			js.executeScript(JS_SCROLL_TO_VIEW_ELEMENT, weblocator);
 			flag = weblocator.isDisplayed();
 		}
@@ -441,8 +421,7 @@ public class CommonActions {
 		boolean isPresent = false;
 		JavascriptExecutor jse = (JavascriptExecutor) DriverManager.getDriver();
 		try {
-			Object obj = jse.executeScript(
-					"return typeof(arguments[0]) != 'undefined' && arguments[0] != null;",
+			Object obj = jse.executeScript("return typeof(arguments[0]) != 'undefined' && arguments[0] != null;",
 					element);
 			if (obj.toString().contains("true")) {
 				isPresent = true;
@@ -462,8 +441,7 @@ public class CommonActions {
 		DriverManager.getDriver().findElement(locator).sendKeys(str);
 	}
 
-	public void selectFromDropDownusingVisibleText(WebElement weblocator,
-			String str) {
+	public void selectFromDropDownusingVisibleText(WebElement weblocator, String str) {
 		this.waitTillElementClickable(weblocator);
 		Select dropdown = new Select(weblocator);
 		dropdown.selectByVisibleText(str);
@@ -478,8 +456,7 @@ public class CommonActions {
 		try {
 			flag = weblocator.isDisplayed();
 		} catch (NoSuchElementException e) {
-			JavascriptExecutor js = (JavascriptExecutor) DriverManager
-					.getDriver();
+			JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
 			js.executeScript(JS_SCROLL_TO_VIEW_ELEMENT, weblocator);
 			flag = weblocator.isDisplayed();
 		}
@@ -497,8 +474,7 @@ public class CommonActions {
 
 	public boolean isPresent(By locator) {
 		try {
-			WebElement weblocator = DriverManager.getDriver()
-					.findElement(locator);
+			WebElement weblocator = DriverManager.getDriver().findElement(locator);
 			weblocator.isDisplayed();
 		} catch (NoSuchElementException e) {
 			return false;
@@ -512,13 +488,14 @@ public class CommonActions {
 		Actions actionClick = new Actions(DriverManager.getDriver());
 		actionClick.moveToElement(element).click(element).perform();
 	}
+
 	public void actionClick(String locator) {
 		this.waitForTimeOutInSec(3);
-		WebElement element = DriverManager.getDriver()
-				.findElement(By.xpath(locator));
+		WebElement element = DriverManager.getDriver().findElement(By.xpath(locator));
 		Actions actionClick = new Actions(DriverManager.getDriver());
 		actionClick.moveToElement(element).click(element).perform();
 	}
+
 	public void hoverOverAnElement(WebElement element) {
 		Actions builder = new Actions(DriverManager.getDriver());
 		builder.moveToElement(element).build().perform();
@@ -529,38 +506,33 @@ public class CommonActions {
 		Actions builder = new Actions(DriverManager.getDriver());
 		builder.moveToElement(element).build().perform();
 	}
+
 	public void hoverOverAnElement(String locator) {
-		WebElement element = DriverManager.getDriver()
-				.findElement(By.xpath(locator));
+		WebElement element = DriverManager.getDriver().findElement(By.xpath(locator));
 		Actions builder = new Actions(DriverManager.getDriver());
 		builder.moveToElement(element).build().perform();
 	}
 
 	public void clickWithJS(By locator) {
 		WebElement element = DriverManager.getDriver().findElement(locator);
-		JavascriptExecutor jsClick = (JavascriptExecutor) DriverManager
-				.getDriver();
+		JavascriptExecutor jsClick = (JavascriptExecutor) DriverManager.getDriver();
 		jsClick.executeScript("arguments[0].click();", element);
 	}
 
 	public void clickWithJS(String locator) {
-		WebElement element = DriverManager.getDriver()
-				.findElement(By.xpath(locator));
-		JavascriptExecutor jsClick = (JavascriptExecutor) DriverManager
-				.getDriver();
+		WebElement element = DriverManager.getDriver().findElement(By.xpath(locator));
+		JavascriptExecutor jsClick = (JavascriptExecutor) DriverManager.getDriver();
 		jsClick.executeScript("arguments[0].click();", element);
 	}
 
 	public void clickWithJS(WebElement locator) {
-		JavascriptExecutor jsClick = (JavascriptExecutor) DriverManager
-				.getDriver();
+		JavascriptExecutor jsClick = (JavascriptExecutor) DriverManager.getDriver();
 		jsClick.executeScript("arguments[0].click();", locator);
 	}
 
 	public void scrollToBottom() {
 		this.waitForTimeOutInSec(5);
-		JavascriptExecutor js = ((JavascriptExecutor) DriverManager
-				.getDriver());
+		JavascriptExecutor js = ((JavascriptExecutor) DriverManager.getDriver());
 		js.executeScript("scroll(0,400)");
 		this.waitForTimeOutInSec(5);
 	}
@@ -568,8 +540,7 @@ public class CommonActions {
 	public void uploadFile(String filePath) {
 		try {
 			StringSelection path = new StringSelection(filePath);
-			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(path,
-					null);
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(path, null);
 			Robot rb = new Robot();
 			DriverManager.getCommonActions().waitForTimeOutInSec(1);
 			rb.keyPress(KeyEvent.VK_CONTROL);
@@ -620,8 +591,7 @@ public class CommonActions {
 	}
 
 	public String getSelectedValueFromDropDown(By weblocator) {
-		Select select = new Select(
-				DriverManager.getDriver().findElement(weblocator));
+		Select select = new Select(DriverManager.getDriver().findElement(weblocator));
 		WebElement option = select.getFirstSelectedOption();
 		String selectedValue = option.getText();
 		if (selectedValue != null) {
@@ -643,67 +613,55 @@ public class CommonActions {
 
 	public void setHtmlCssZoomLevelTo(int zoomLevel) {
 		JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
-		js.executeScript("document.body.style.transform='scale("
-				+ (float) zoomLevel / 100 + ")';");
+		js.executeScript("document.body.style.transform='scale(" + (float) zoomLevel / 100 + ")';");
 		DriverManager.getCommonActions().waitForTimeOutInSec(2);
 	}
 
 	public static void topEmbedScreenshot() {
 		explicitWaitTime(2000);
 		DriverManager.getCommonActions().scrollToTop();
-		byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver())
-				.getScreenshotAs(OutputType.BYTES);
-		DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(),
-				DriverManager.getScenario().getName());
+		byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
+		DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(), DriverManager.getScenario().getName());
 	}
 
 	public static void bottomEmbedScreenshot() {
 		explicitWaitTime(2000);
 		DriverManager.getCommonActions().scrollToBottom();
-		byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver())
-				.getScreenshotAs(OutputType.BYTES);
+		byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
 
-		DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(),
-				DriverManager.getScenario().getName());
+		DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(), DriverManager.getScenario().getName());
 	}
 
 	public static byte[] embedScreenshot() {
 		explicitWaitTime(2000);
-		byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver())
-				.getScreenshotAs(OutputType.BYTES);
-		DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(),
-				DriverManager.getScenario().getName());
+		byte[] srcBytes = ((TakesScreenshot) DriverManager.getDriver()).getScreenshotAs(OutputType.BYTES);
+		DriverManager.getScenario().attach(srcBytes, MediaType.PNG.toString(), DriverManager.getScenario().getName());
 		return srcBytes;
 	}
 
-	//// public static void copyFirstRunReport() {
-	//// File source = new File(
-	//// USER_DIR + PropertyStorage.getGeneratedReportDir());
-	//// Path dest = Paths
-	//// .get(USER_DIR + PropertyStorage.getFirstRunReportDir());
-	//// try {
-	//// copyFile(source, dest);
-	//// } catch (IOException e) {
-	//// e.printStackTrace();
-	//// }
-	//// }
-	//
-	// public static void copyRerunReport() {
-	// File source = new File(
-	// USER_DIR + PropertyStorage.getGeneratedReportDir());
-	// Path dest = Paths.get(USER_DIR + PropertyStorage.getReRunReportDir());
-	// try {
-	// copyFile(source, dest);
-	// } catch (IOException e) {
-	// e.printStackTrace();
-	// }
-	// }
+	public static void copyFirstRunReport() {
+		File source = new File(USER_DIR + fileReader.getProperty("extent.html.report"));
+		Path dest = Paths.get(USER_DIR + fileReader.getProperty("extent.html.firstrun.report"));
+		try {
+			copyFile(source, dest);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void copyRerunReport() {
+		File source = new File(USER_DIR + fileReader.getProperty("extent.html.report"));
+		Path dest = Paths.get(USER_DIR + fileReader.getProperty("extent.html.rerun.report"));
+		try {
+			copyFile(source, dest);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public String openNewWindow(Duration timeOutInSeconds) {
-		final Set<String> openedWindows = DriverManager.getDriver()
-				.getWindowHandles();
-		((JavascriptExecutor) DriverManager.getDriver())
-				.executeScript("window.open()");
+		final Set<String> openedWindows = DriverManager.getDriver().getWindowHandles();
+		((JavascriptExecutor) DriverManager.getDriver()).executeScript("window.open()");
 		return new WebDriverWait(DriverManager.getDriver(), timeOutInSeconds)
 				.until(newWindowHandleIsPresent(openedWindows));
 	}
@@ -720,5 +678,15 @@ public class CommonActions {
 			new File(dest.toString()).mkdir();
 		}
 		FileUtils.copyFileToDirectory(source, dest.toFile());
+	}
+	
+	public static void renameTheExtentReportHtml() {
+		try {
+			String format = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss'.html'").format(new Date());
+			Path source = Paths.get(System.getProperty("user.dir") + fileReader.getProperty("extent.html.report"));
+			Files.move(source, source.resolveSibling("ExtentHtmlReport-" + format));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
