@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Execution-Report
-          path: 'D:/a/QE-Project/QE-Project/QEA-Integration-Tests/ExtentReport/CucumberHtmlReport'
+          path: 'D:/a/QE-Project/QE-Project/QEA-Integration-Tests/ExtentReport'
      
       - name: Send Email
         if: success() || failure()
@@ -64,4 +64,4 @@ jobs:
           to: 'vijayy8981@gmail.com,shivanand.jangam@gmail.com'
           from: Automated Tests Execution report for ${{github.event.inputs.Module}} Suite
           contentType: text/html
-          attachments: 'D:/a/QE-Project/QE-Project/QEA-Integration-Tests/ExtentReport/CucumberHtmlReport'
+          attachments: 'D:/a/QE-Project/QE-Project/QEA-Integration-Tests/ExtentReport'
