@@ -35,11 +35,11 @@ jobs:
 
       - name: Started Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: 'mvn clean test -DsuiteXmlFile="Run_UI_Tests.xml" -Dtags="@RerunTest"'
+        run: 'mvn clean -Dtags="@RerunTest" -DsuiteXmlFile="Run_UI_Tests.xml"  test'
 
       - name: Started FAILED Tests Re-Run Execution
         working-directory: ./QEA-Integration-Tests
-        run: 'mvn clean test -DsuiteXmlFile="Run_FailedTest.xml"'
+        run: 'mvn clean -DsuiteXmlFile="Run_FailedTest.xml" test'
         
       - name: Upload Execution Report
         if: '${{always()}}'
