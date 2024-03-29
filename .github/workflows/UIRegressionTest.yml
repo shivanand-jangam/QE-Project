@@ -1,43 +1,63 @@
-name: Run Regression Tests
-on:
+name: Run Selected Module Tests
+'on':
   workflow_dispatch:
-   inputs:
+    inputs:
       Module:
-        description: Select a module for execution
-        default: ''
+        description: Suite for execution
+        default: 'RerunTest'
         required: true
         type: choice
         options:
-        - RegressionTest
-        - SmokeTest
-        - DominosOrderOnlineTest
+          - SmokeTest
+          - RegressionTest
+          - RerunTest
 jobs:
+
   RunTests:
+
     runs-on: windows-latest
-   
+
     steps:
       - uses: browser-actions/setup-chrome@latest
       - run: chrome --version
       - uses: actions/checkout@v2
-     
+
       - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
           java-version: '11'
-          distribution: 'adopt'
-         
+          distribution: adopt
+
       - name: Set up Maven
         uses: stCarolas/setup-maven@v4.3
         with:
-         maven-version: 3.8.2
-     
-      - name: Started ${{github.event.inputs.Module}} Tests Execution
+          maven-version: 3.8.2
+
+      - name: Started Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: mvn test -DsuiteXmlFile="Run_UI_Tests.xml" -Dtags=@${{github.event.inputs.Module}}
-       
+        run: 'mvn clean test -DsuiteXmlFile="Run_UI_Tests.xml" -Dcucumber.filter.tags="@RerunTest"'
+     
       - name: Upload Execution Report
-        if : ${{always()}}
+        if: '${{always()}}'
         uses: actions/upload-artifact@v3
         with:
           name: Execution-Report
-          path: D:/a/QE-Project/QE-Project/QEA-Integration-Tests/ExtentReport
+          path: 'D:/a/QE-Project/QE-Project/QEA-Integration-Tests/ExtentReport/CucumberHtmlReport'
+     
+      - name: Send Email
+        if: success() || failure()
+        uses: dawidd6/action-send-mail@v2
+        with:
+          server_address: smtp.office365.com
+          server_port: 587
+          secure: true
+          username: 'qatest1258@outlook.com'
+          password: 'TestAutomation@11'
+          subject: >-
+            Execution of ${{ github.workflow }} has ${{ job.status }}
+          body: >-
+            Execution of ${{ github.workflow }} has ${{ job.status }}. Please check the attached report.
+          to: 'vijayy8981@gmail.com,shivanand.jangam@gmail.com'
+          from: Automated Tests Execution report for ${{github.event.inputs.Module}} Suite
+          contentType: text/html
+          attachments: 'D:/a/QE-Project/QE-Project/QEA-Integration-Tests/ExtentReport/CucumberHtmlReport'
