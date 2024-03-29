@@ -60,4 +60,4 @@ jobs:
           to: 'vijayy8981@gmail.com,shivanand.jangam@gmail.com'
           from: Automated Tests Execution report for ${{github.event.inputs.Module}} Suite
           contentType: text/html
-          attachments: 'D:/a/QE-Project/QE-Project/QEA-Integration-Tests/ExtentReport.zip'
+          attachments: 'D:/a/QE-Project/QE-Project/QEA-Integration-Tests/ExtentReport'
