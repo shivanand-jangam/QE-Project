@@ -60,6 +60,7 @@ jobs:
         run: 'mvn clean -DsuiteXmlFile="Run_UI_Tests.xml" -Dtags=@${{github.event.inputs.Module}} -Dbrowser=${{github.event.inputs.Browser}} test'
 
       - name: Started FAILED Tests Re-Run Execution
+        if: failure()
         working-directory: ./QEA-Integration-Tests
         run: 'mvn clean -DsuiteXmlFile="Run_FailedTest.xml" test'
         
