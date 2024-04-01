@@ -37,7 +37,7 @@ jobs:
         
       - name: Started Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: 'mvn clean -Dtags="@RerunTest" -Dbrowser="chrome" -DsuiteXmlFile="Run_UI_Tests.xml"  test'
+        run: 'mvn clean -DsuiteXmlFile="Run_UI_Tests.xml" -Dcucumber.filter.tags=@RerunTest -Dbrowser="chrome" test'
 
       - name: Started FAILED Tests Re-Run Execution
         working-directory: ./QEA-Integration-Tests
