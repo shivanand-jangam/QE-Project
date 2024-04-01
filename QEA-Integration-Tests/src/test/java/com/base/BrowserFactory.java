@@ -34,10 +34,9 @@ public class BrowserFactory {
 		driverManager.setDriver(driver);
 		driverManager.setCommonActions(driverManager);
 		// driverManager.getDriver().
+		System.out.println("MY EXECUTION URL: " + getExecutionURL());
+		DriverManager.getDriver().navigate().to(getExecutionURL());
 
-		String executionEnv = propertyFileReader.getProperty("base.url").replace("{env}", getExecutionEnvironment());
-		System.out.println("MY EXECUTION ENVIRONMENT URL: " + executionEnv);
-		DriverManager.getDriver().navigate().to(executionEnv);
 		DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 	}
 
@@ -49,11 +48,16 @@ public class BrowserFactory {
 		DriverManager.getDriver().navigate().to(url);
 	}
 
-	public static String getExecutionEnvironment() {
-		if (System.getProperty("Environment") != null) {
-			return System.setProperty("Environment", System.getProperty("Environment").toLowerCase().trim());
+	public static String getExecutionURL() {
+		if (System.getProperty("Environment") != null && System.getProperty("Environment").equalsIgnoreCase("prod")) {
+			return "https://www.dominos.co.in/";
+		} else if (System.getProperty("Environment") != null) {
+			return propertyFileReader.getProperty("base.url").replace("{env}", System.getProperty("Environment"));
+		} else if (propertyFileReader.getProperty("Environment").toLowerCase().trim().equalsIgnoreCase("prod")) {
+			return "https://www.dominos.co.in/";
 		}
-		return propertyFileReader.getProperty("Environment").toLowerCase().trim();
+		return propertyFileReader.getProperty("base.url").replace("{env}",
+				propertyFileReader.getProperty("Environment"));
 	}
 
 }
