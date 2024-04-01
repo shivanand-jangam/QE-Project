@@ -1,9 +1,9 @@
-name: Run Failed test also
+name: Run Selected module Testcases
 'on':
   workflow_dispatch:
     inputs:
       Module:
-        description: Suite for execution
+        description: Select Test Suite for execution
         default: 'RerunTest'
         required: true
         type: choice
@@ -11,6 +11,26 @@ name: Run Failed test also
           - SmokeTest
           - RegressionTest
           - RerunTest
+
+      Browser:
+        description: Select Browser for execution
+        default: 'Chrome'
+        required: true
+        type: choice
+        options:
+          - Chrome
+          - Edge
+          - Firefox
+
+      Environment:
+        description: Select Environment for execution
+        default: 'QA'
+        required: true
+        type: choice
+        options:
+          - QA
+          - TEST
+          - DEV
 jobs:
 
   RunTests:
@@ -37,7 +57,7 @@ jobs:
         
       - name: Started Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: 'mvn clean -DsuiteXmlFile="Run_UI_Tests.xml" -Dcucumber.filter.tags=@RerunTest -Dbrowser="chrome" test'
+        run: 'mvn clean -DsuiteXmlFile="Run_UI_Tests.xml" -Dcucumber.filter.tags=@${{github.event.inputs.Module}} -Dbrowser=${{github.event.inputs.Browser}} test'
 
       - name: Started FAILED Tests Re-Run Execution
         working-directory: ./QEA-Integration-Tests
