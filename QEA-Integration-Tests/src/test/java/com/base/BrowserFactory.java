@@ -48,7 +48,7 @@ public class BrowserFactory {
 		DriverManager.getDriver().navigate().to(url);
 	}
 
-	public static String getExecutionURL() {
+	public String getExecutionURL() {
 		if (System.getProperty("Environment") != null && System.getProperty("Environment").equalsIgnoreCase("prod")) {
 			return "https://www.dominos.co.in/";
 		} else if (System.getProperty("Environment") != null) {

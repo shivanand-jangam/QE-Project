@@ -18,7 +18,7 @@ import io.cucumber.testng.TestNGCucumberRunner;
 		"html:target/cucumber-reports/cucumber-pretty",
 //				 "html:target/cucumber-reports/cucumber-pretty.html",
 		"rerun:ExtentReport/rerun.txt",
-		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:" })
+		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:" },tags = "@RerunTest369")
 
 public class UITestRunner<CucumberFeatureWrapper> {
 
@@ -41,7 +41,7 @@ public class UITestRunner<CucumberFeatureWrapper> {
 		testNGCucumberRunner.runScenario(pickleEvent.getPickle());
 	}
 
-	@DataProvider(parallel = false)
+	@DataProvider(parallel = true)
 	public Object[][] scenarios() {
 		return testNGCucumberRunner.provideScenarios();
 	}
