@@ -9,6 +9,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<cucumber.filter.tags>cucumber.filter.tags</cucumber.filter.tags>
 	</properties>
 
 	<dependencies>
@@ -200,6 +201,9 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>3.0.0-M7</version>
 				<configuration>
+					<systemPropertyVariables>
+						<cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
+					</systemPropertyVariables>
 					<suiteXmlFiles>
 						<suiteXmlFile>${suiteXmlFile}</suiteXmlFile>
 					</suiteXmlFiles>
@@ -212,17 +216,9 @@
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
 				<version>3.0.0-M7</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
 				<configuration>
 					<systemPropertyVariables>
-						<cucumber.filter.tags>${tags}</cucumber.filter.tags>
+						<cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
 					</systemPropertyVariables>
 				</configuration>
 			</plugin>
