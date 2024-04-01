@@ -24,10 +24,11 @@ name: Run Selected module Testcases
 
       Environment:
         description: Select Environment for execution
-        default: 'QA'
+        default: 'PROD'
         required: true
         type: choice
         options:
+          - PROD
           - QA
           - TEST
           - DEV
