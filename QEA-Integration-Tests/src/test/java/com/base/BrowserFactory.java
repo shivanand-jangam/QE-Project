@@ -9,8 +9,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 
 import com.utils.PropertyFileReader;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 public class BrowserFactory {
 
 	WebDriver driver;
@@ -35,12 +33,12 @@ public class BrowserFactory {
 		}
 		driverManager.setDriver(driver);
 		driverManager.setCommonActions(driverManager);
-		//driverManager.getDriver().
-		
-		DriverManager.getDriver().navigate()
-				.to(propertyFileReader.getProperty("base.url"));
-		DriverManager.getDriver().manage().timeouts()
-				.implicitlyWait(Duration.ofSeconds(10));
+		// driverManager.getDriver().
+
+		String executionEnv = propertyFileReader.getProperty("base.url").replace("{env}", getExecutionEnvironment());
+		System.out.println("MY EXECUTION ENVIRONMENT URL: " + executionEnv);
+		DriverManager.getDriver().navigate().to(executionEnv);
+		DriverManager.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 	}
 
 	public void closeBrowser() {
@@ -49,6 +47,13 @@ public class BrowserFactory {
 
 	public static void navigateToTheUrl(String url) {
 		DriverManager.getDriver().navigate().to(url);
+	}
+
+	public static String getExecutionEnvironment() {
+		if (System.getProperty("Environment") != null) {
+			return System.setProperty("Environment", System.getProperty("Environment").toLowerCase().trim());
+		}
+		return propertyFileReader.getProperty("Environment").toLowerCase().trim();
 	}
 
 }
