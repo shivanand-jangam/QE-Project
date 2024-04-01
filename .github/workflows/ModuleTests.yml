@@ -57,12 +57,12 @@ jobs:
         
       - name: Started Tests Execution
         working-directory: ./QEA-Integration-Tests
-        run: 'mvn clean -DsuiteXmlFile="Run_UI_Tests.xml" -Dtags=@${{github.event.inputs.Module}} -Dbrowser=${{github.event.inputs.Browser}} test'
+        run: 'mvn clean -DsuiteXmlFile="Run_UI_Tests.xml" -DEnvironment=${{github.event.inputs.Environment}} -Dtags=@${{github.event.inputs.Module}} -Dbrowser=${{github.event.inputs.Browser}} test'
 
       - name: Started FAILED Tests Re-Run Execution
         if: failure()
         working-directory: ./QEA-Integration-Tests
-        run: 'mvn clean -DsuiteXmlFile="Run_FailedTest.xml" test'
+        run: 'mvn clean -DsuiteXmlFile="Run_FailedTest.xml" -DEnvironment=${{github.event.inputs.Environment}} -Dbrowser=${{github.event.inputs.Browser}} test'
         
       - name: Upload Execution Report
         if: '${{always()}}'
