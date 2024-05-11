@@ -3,7 +3,7 @@
 <suite name="Regression Chrome Suite" data-provider-thread-count="2">
 	<test name="Run Regression Suite">
 		<classes>
-			<class name="com.testrunner.TestRunner" />
+			<class name="com.testrunner.APITestRunner" />
 		</classes>
 	</test>
 </suite> <!-- Suite -->
